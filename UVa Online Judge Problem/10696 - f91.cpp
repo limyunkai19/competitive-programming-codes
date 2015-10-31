@@ -1,0 +1,1 @@
+#include <iostream>using namespace std;int f91(int x){	if(x >= 101){		return x-10;	}	else{		return 91;	}}int main(){	int x;	while(cin >> x && x != 0){		cout << "f91(" << x << ") = " << f91(x) << endl;	}		return 0;}
