@@ -10,7 +10,7 @@ typedef pair<dd, int> ddi;
 
 int main(){
     double A, B, a, b;
-    int n, idx;
+    int n;
     vector<ddi> interval;
     vector<int> used;
 
@@ -23,30 +23,61 @@ int main(){
             interval.push_back(ddi(dd(a, b), i));
         }
         sort(interval.begin(), interval.end());
-        if(A == B || interval[0].first.first > A){
-            cout << 0 << endl;
-            continue;
-        }
-        double far = A, nextfar = interval[0].first.second;
-        idx = 0;
-        bool hole = false;
-        for(int i = 0; i < interval.size() && nextfar < B; i++){
-            if(interval[i].first.first > far){
-                if(interval[i].first.first > nextfar){
-                    hole = true;
+
+        // stupid special case
+        if(A == B){
+            int i;
+            for(i = 0; i < interval.size(); i++){
+                double l = interval[i].first.first, r = interval[i].first.second;
+                if(l <= A && B <= r){
+                    cout << 1 << endl;
+                    cout << interval[i].second << endl;
                     break;
                 }
-                far = nextfar;
-                used.push_back(idx);
             }
-            if(nextfar < interval[i].first.second){
-                nextfar = interval[i].first.second;
-                idx = interval[i].second;
+            if(i == interval.size()){
+                cout << "impossible" << endl;
             }
+            continue;
         }
-        used.push_back(idx);
 
-        if(nextfar < B || hole){
+        // dont use weird algorithm
+        // among those interval whose start <= A, choose the one with furthest end
+        // make A = furthest end;
+        // break when A >= B
+        // impossible when furthest end == A OR A < B at the end
+
+        int i = 0;
+        while(i < interval.size() && A < B){
+            int idx = -1;
+            double furthest_end = A;
+
+            // for each interval with l < A, choose best r
+            for(;i < interval.size(); i++){
+                double l = interval[i].first.first, r = interval[i].first.second;
+                if(l > A){
+                    i--;
+                    break;
+                }
+                // candidate interval (l < A)
+                if(r > furthest_end){
+                    // best so far
+                    idx = interval[i].second;
+                    furthest_end = r;
+                }
+            }
+
+            if(idx == -1){
+                // no interval found, a gap
+                // invarient A < B remain
+                break;
+            }
+
+            used.push_back(idx);
+            A = furthest_end;
+        }
+
+        if(A < B){
             cout << "impossible" << endl;
         }
         else{

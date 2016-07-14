@@ -1,39 +1,63 @@
 #include <iostream>
-#include <cstdio>
-#include <vector>
 
 using namespace std;
 
-bool isvowel(char c){
-    if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
-        return true;
-    return false;
-}
+long long a[10100], b[10100];
+long long sum = 0;
 
 int main(){
-    string s, del = "";
-    vector<char> a;
-    while(cin >> s){
-        a.clear();
-        for(int i = 0; i < s.size(); i++){
-            int sz = a.size();
-            if(sz > 1 && a[sz-1] == 'p' && isvowel(s[i]) && a[sz-2] == s[i]){
-                a.pop_back();
-                a.pop_back();
-                a.push_back(s[i]);
-                a.push_back(s[i+1]);
-                a.push_back(s[i+2]);
-                i+=2;
+    int n;
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> a[i];
+        sum += a[i];
+    }
 
-                continue;
-            }
-            a.push_back(s[i]);
+    if(n%3 == 1){
+        b[0] = sum/3;
+        b[1] = sum/3;
+        for(int i = 2; i < n; i+=3){
+            b[0] -= a[i];
+            b[1] -= a[i+1];
         }
-        cout << del;
-        for(int i = 0; i < a.size(); i++){
-            cout << a[i];
+        for(int i = 2; i < n; i++){
+            b[i] = a[i-1]-b[i-1]-b[i-2];
         }
-        del = " ";
+    }
+    else if(n%3 == 2){
+        b[0] = sum/3-a[n-1];
+        b[1] = sum/3-a[0];
+        for(int i = 1; i < n-1; i+=3){
+            b[0] -= a[i];
+            b[1] -= a[i+1];
+        }
+        b[0] = -b[0];
+        b[1] = -b[1];
+        for(int i = 2; i < n; i++){
+            b[i] = a[i-1]-b[i-1]-b[i-2];
+        }
+    }
+    else{
+        long long lowest[3] = {1, 1, 1};
+        b[0] = b[1] = b[2] = 1;
+        for(int i = 3; i < n; i ++){
+            b[i] = a[i-1] - a[i-2] + b[i-3];
+            lowest[i%3] = min(lowest[i%3], b[i]);
+        }
+        long long cur_sum = 0;
+        for(int i = 0; i < n; i++){
+            b[i] += 1-lowest[i%3];
+            cur_sum += b[i];
+        }
+
+        int diff = (sum-cur_sum*3)/(long long)n;
+        for(int i = 0; i < n; i+= 3)
+            b[i] += diff;
+    }
+
+
+    for(int i = 0; i < n; i++){
+        cout << b[i] << endl;
     }
 
     return 0;

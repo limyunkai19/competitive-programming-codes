@@ -1,0 +1,31 @@
+intervalcover           classic greedy interval cover
+grass                   classic greedy interval cover
+bank                    nice greedy
+pikemaneasy             greedy
+pikemanhard             greedy, cycle finding
+virus                   greedy
+spiderman               classic dp (knapsack/subset sum) + binary search
+exactchange2            classic dp (knapsack/subset sum)
+muzicari                classic dp (knapsack/subset sum)
+orders                  classic dp (knapsack) with repeatation
+pebblesolitaire2        classic dp (game state)
+solitaire               classic dp (game state)
+mailbox                 dp, recurrence relation
+digitsum                dp, recurrence relation
+commercials             kadane's algorithm
+batmanacci              nice divide and conquer
+bing                    trie
+kemija                  ad hoc, math, constructive
+treasurediving          dijkstra, tsp
+shootout                dp, math
+sortofsorting           O(n^2) sorting, ad hoc
+kingswalk               dp (nCk)
+memory                  dp
+copyingdna              dp, rolling hash
+rollercoasterfun        dp, observation, optimisation (using special case)
+whacamole               dp, tricky (move out box)
+squarefieldshard        dp, binary search
+cheatingluck            dp, game state, observation (from iterative to binary search)
+uxuhulvoting            dp, game state
+unicycles               dp, bitmask
+carpet                  math, geometry (super little), binary search
