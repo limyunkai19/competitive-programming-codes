@@ -29,3 +29,45 @@ cheatingluck            dp, game state, observation (from iterative to binary se
 uxuhulvoting            dp, game state
 unicycles               dp, bitmask
 carpet                  math, geometry (super little), binary search
+heritage                dp (LIS-like)
+cetvrta                 trivial, ad hoc
+reversebinary           easy, ad hoc, base changing
+zamka                   easy, ad hoc
+freckles                graph, mst
+getshorty               graph, dijkstra
+breakingbad             graph, bipartite checking
+minspantree             graph, mst, directed (convert to undirected), negative weight (it's the same)
+allpairspath            graph, APSP, negative weight with negative cycle detection, floyd warshall
+eulerianpath            graph, eulerian path finding, dfs
+speedlimit              easy, ad hoc
+acm                     easy, ad hoc
+trainpassengers         ad hoc, carefull case analysis
+numbertree              ad hoc, tree
+quickbrownfox           ad hoc, string, pangram
+blackfriday             easy, ad hoc
+armystrengthhard        sorting + simulating O(nlogn), observation => linear scan, keep max O(n)
+goldbach2               prime, sieve, goldbach's conjecture
+tutorial                ad hoc, case by case, SG ICPC regional prelim
+countingstars           graph, dfs, grid, floodfill
+moneymatters            graph, dfs, connected component
+cd                      two pointers
+safepassage             dijkstra on state, tricky (looks like bitmask dp)
+vacuum                  observation, binary search
+trollhunt               easy, constructive algorithm
+judging                 easy, binary search, stl::multiset
+debugging               divide and conquer, n-ary search
+ispiti                  sorting, data structure, segement tree, binary search
+colouring               graph colouring, recursive backtracking
+pianino                 observation, invarient
+balanceddiet            subset sum, backtracking
+coke                    NOT GREEDY, dp, observation
+messages                trie, dp (or greedy)
+stretching              dp
+classy                  encode to number, sorting
+lektira                 greedy
+bundles                 observation, OOP
+magical3                math
+factovisors             math, prime, prime factor
+race                    tsp like, dp
+anagramcounting         big int
+insert                  big int, obseervation, divide and conquer
