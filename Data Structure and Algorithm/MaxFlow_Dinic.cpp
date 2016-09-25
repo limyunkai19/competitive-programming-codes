@@ -15,6 +15,7 @@ using namespace std;
 struct MaxFlow{
     int n, s, t;
     vector<vector<int> > graph;
+    // can convert to edge list with edge index
     vector<map<int, long long> > cap;
     vector<int> dist, q, now;
 
