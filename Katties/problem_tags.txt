@@ -71,3 +71,9 @@ factovisors             math, prime, prime factor
 race                    tsp like, dp
 anagramcounting         big int
 insert                  big int, obseervation, divide and conquer
+gcds                    math, gcd, observation
+threepowers             math, easy, big int
+color                   greedy
+crypto                  math, prime
+flippingcards           observation, bipartite check
+oddandevenzeros         dp, recurrence relation
