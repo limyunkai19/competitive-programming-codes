@@ -12,33 +12,26 @@
 
 using namespace std;
 
+typedef pair<int, int> ii;
+
 struct MaxFlow{
     int n, s, t;
-    vector<vector<int> > graph;
-    // can convert to edge list with edge index
-    vector<map<int, long long> > cap;
+    vector<vector<ii> > graph;
+    vector<long long> cap;
     vector<int> dist, q, now;
 
     MaxFlow(int _n){
         // 0-based indexing, init(n+1) for 1 based indexing
         n = _n;
-        graph.assign(n, vector<int> ());
-        // need to change this if too slow
-        cap.assign(n, map<int, long long> ());
+        graph.assign(n, vector<ii> ());
         q.resize(n+10);
     }
 
     void addEdge(int u, int v, long long c, bool directed){
-        if(cap[u][v] == 0 && cap[v][u] == 0){
-            graph[u].push_back(v);
-            graph[v].push_back(u);
-        }
-
-        cap[u][v] += c;
-
-        if(!directed){
-            cap[v][u] += c;
-        }
+        graph[u].push_back(ii(v, cap.size()));
+        cap.push_back(c);
+        graph[v].push_back(ii(u, cap.size()));
+        cap.push_back(directed?0:c);
     }
 
     long long getMaxFlow(int _s, int _t){
@@ -62,9 +55,9 @@ struct MaxFlow{
         while(qs < qe){
             int u = q[qs++];
             for(int i = 0; i < graph[u].size(); i++){
-                int v = graph[u][i];
+                int v = graph[u][i].first, e = graph[u][i].second;
 
-                if(dist[v] == INF && cap[u][v] > 0){
+                if(dist[v] == INF && cap[e] > 0){
                     dist[v] = dist[u]+1;
                     q[qe++] = v;
                 }
@@ -78,15 +71,15 @@ struct MaxFlow{
         if(curFlow == 0)    return curFlow;
 
         for(; now[u] < graph[u].size(); now[u]++){
-            int v = graph[u][now[u]];
+            int v = graph[u][now[u]].first, e = graph[u][now[u]].second;
 
-            if(dist[v] == dist[u] +1 && cap[u][v] > 0){
+            if(dist[v] == dist[u] +1 && cap[e] > 0){
                 // an edge exist in level graph
-                long long flowSent = dfsSendFlow(v, min(curFlow, cap[u][v]));
+                long long flowSent = dfsSendFlow(v, min(curFlow, cap[e]));
 
                 if(flowSent > 0){
-                    cap[u][v] -= flowSent;
-                    cap[v][u] += flowSent;
+                    cap[e] -= flowSent;
+                    cap[e^1] += flowSent;
 
                     return flowSent;
                 }
