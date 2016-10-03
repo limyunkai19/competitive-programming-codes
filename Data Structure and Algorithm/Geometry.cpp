@@ -352,9 +352,90 @@ vector<point> CH(vector<point> P) {   // the content of P may be reshuffled
 int main() {
   // note:
   // 1) usage of pseudoangle, pseudoangle = copysign(1. - dx/(fabs(dx)+fabs(dy)),dy)
+  //      OR double pseudoangle(double dy, double dx){return copysign(1. - dx/(fabs(dx)+fabs(dy)),dy);}
   // 2) to accept collinear points, we have to change the `> 0' in ccw function
   // 3) for polygon, the last point must be same as first point, and it is defined in conterclockwise
-
+  // 4) reverse point a, b to get second half of cut polygon
   return 0;
 }
 
+// Pick theorem
+// Given non-intersecting polygon.
+// S = area
+// I = number of integer points strictly Inside
+// B = number of points on sides of polygon
+// S = I + B/2 - 1
+
+
+// Find intersection of 2 polygons
+// Helper method
+#ifdef include
+bool intersect_1pt(point a, point b,
+    point c, point d, point &r) {
+    double D =  (b - a) % (d - c);
+    if (cmp(D, 0) == 0) return false;
+    double t =  ((c - a) % (d - c)) / D;
+    double s = -((a - c) % (b - a)) / D;
+    r = a + (b - a) * t;
+    return cmp(t, 0) > 0 && cmp(t, 1) < 0 && cmp(s, 0) > 0 && cmp(s, 1) < 0;
+}
+Polygon convex_intersect(Polygon P, Polygon Q) {
+    const int n = P.size(), m = Q.size();
+    int a = 0, b = 0, aa = 0, ba = 0;
+    enum { Pin, Qin, Unknown } in = Unknown;
+    Polygon R;
+    do {
+        int a1 = (a+n-1) % n, b1 = (b+m-1) % m;
+        double C = (P[a] - P[a1]) % (Q[b] - Q[b1]);
+        double A = (P[a1] - Q[b]) % (P[a] - Q[b]);
+        double B = (Q[b1] - P[a]) % (Q[b] - P[a]);
+        point r;
+        if (intersect_1pt(P[a1], P[a], Q[b1], Q[b], r)) {
+            if (in == Unknown) aa = ba = 0;
+            R.push_back( r );
+            in = B > 0 ? Pin : A > 0 ? Qin : in;
+        }
+        if (C == 0 && B == 0 && A == 0) {
+            if (in == Pin) { b = (b + 1) % m; ++ba; }
+            else            { a = (a + 1) % m; ++aa; }
+        } else if (C >= 0) {
+            if (A > 0) { if (in == Pin) R.push_back(P[a]); a = (a+1)%n; ++aa; }
+            else        { if (in == Qin) R.push_back(Q[b]); b = (b+1)%m; ++ba; }
+        } else {
+            if (B > 0) { if (in == Qin) R.push_back(Q[b]); b = (b+1)%m; ++ba; }
+            else        { if (in == Pin) R.push_back(P[a]); a = (a+1)%n; ++aa; }
+        }
+    } while ( (aa < n || ba < m) && aa < 2*n && ba < 2*m );
+    if (in == Unknown) {
+        if (in_convex(Q, P[0])) return P;
+        if (in_convex(P, Q[0])) return Q;
+    }
+    return R;
+}
+
+// Find the diameter of polygon.
+// Rotating callipers
+double convex_diameter(Polygon pt) {
+    const int n = pt.size();
+    int is = 0, js = 0;
+    for (int i = 1; i < n; ++i) {
+        if (pt[i].y > pt[is].y) is = i;
+        if (pt[i].y < pt[js].y) js = i;
+    }
+    double maxd = (pt[is]-pt[js]).norm();
+    int i, maxi, j, maxj;
+    i = maxi = is;
+    j = maxj = js;
+    do {
+        int jj = j+1; if (jj == n) jj = 0;
+        if ((pt[i] - pt[jj]).norm() > (pt[i] - pt[j]).norm()) j = (j+1) % n;
+        else i = (i+1) % n;
+        if ((pt[i]-pt[j]).norm() > maxd) {
+            maxd = (pt[i]-pt[j]).norm();
+            maxi = i; maxj = j;
+        }
+    } while (i != is || j != js);
+    return maxd; /* farthest pair is (maxi, maxj). */
+}
+
+#endif
