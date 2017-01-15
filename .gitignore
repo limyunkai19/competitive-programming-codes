@@ -1,0 +1,7 @@
+*.txt
+*.exe*
+*.in
+*.out
+
+!problem_tags.txt
+!ACMICPC_CheatSheet.txt
