@@ -77,3 +77,7 @@ color                   greedy
 crypto                  math, prime
 flippingcards           observation, bipartite check
 oddandevenzeros         dp, recurrence relation
+continuousmedian        continuous median, pbds, order statistic tree
+cookieselection         continuous median, pbds, order statistic tree
+babynames               pbds, order statistic tree
+gcpc                    pbds, order statistic tree

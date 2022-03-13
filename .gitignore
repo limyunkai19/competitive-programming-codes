@@ -1,8 +1,8 @@
-*.txt
 *.exe*
 *.in
 *.out
 .vscode
+.DS_Store
 
-!problem_tags.txt
+!000_TAGS.txt
 !ACMICPC_CheatSheet.txt
