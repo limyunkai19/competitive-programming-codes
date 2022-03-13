@@ -1,6 +1,6 @@
 // Ordered Set implementation with PBDS
 // Solve Kattis problem: https://open.kattis.com/problems/continuousmedian
-// Time on Kattis: 0.37 sec
+// Time on Kattis: 0.33 sec
 
 #include <iostream>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,18 +28,14 @@ int main() {
     int t;
     cin >> t;
     while(t--) {
-        int n;
+        int n, x;
         cin >> n;
-
-        vector<int> a(n);
-        for(int i = 0; i < n; i++) {
-            cin >> a[i];
-        }
 
         long long ans = 0;
         ordered_set<ii> set;
         for(int i = 0; i < n; i++) {
-            set.insert(ii(a[i], i));
+            cin >> x;
+            set.insert(ii(x, i));
             if(i % 2 == 0) {
                 ans += set.find_by_order(i/2)->first;
             }
