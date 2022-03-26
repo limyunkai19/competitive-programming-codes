@@ -1,0 +1,18 @@
+4 3
+amir
+brenda
+charlie
+debby
+5 brenda
+6 1 amir
+7 1 brenda
+8 1 charlie
+7 1 debby
+8 4 amir brenda charlie debby
+2 amir
+3 1 amir
+6 2 charlie debby
+3 debby
+4 1 brenda
+6 1 charlie
+5 1 debby
