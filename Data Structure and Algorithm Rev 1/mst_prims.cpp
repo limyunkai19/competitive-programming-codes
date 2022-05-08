@@ -1,5 +1,6 @@
 // My implementation of Prim's algorithm
 // Solve Kattis problem: https://open.kattis.com/problems/cats
+// Time on Kattis: 1.53 sec
 
 #include <iostream>
 #include <vector>
