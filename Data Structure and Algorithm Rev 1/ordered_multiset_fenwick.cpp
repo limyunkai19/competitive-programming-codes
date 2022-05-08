@@ -2,6 +2,19 @@
 // Solve Kattis problem: https://open.kattis.com/problems/continuousmedian
 // Time on Kattis: 0.39 sec
 
+// Note: this ordered multiset implemented with fenwick tree is only suitable
+//       when the range of input is known beforehand and the range is small
+// Time and memory complexity will be based on L = range of input
+// Time Complexity: O(log L) for update and count, O(log log L) for findByOrder
+// Memory Complexity: O(L)
+// Usage:
+//  - Initialize an ordered multiset, OrderedMultiset s
+//  - Insert one instance of x into the multiset, s.update(x, 1)
+//  - Remove one instance of x from the multiset, s.update(x, -1);
+//  - Get the i-th (0-based indexing) item from the multiset, s.findByOrder(i)
+//  - Count operation, s.countLesser(x), s.countLesserOrEqual(x), s.countGreater(x), s.countGreaterOrEqual(x)
+//  - Size of the multiset, s.size()
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -40,14 +53,14 @@ public:
     }
 };
 
-class OrderedMultiSet {
+class OrderedMultiset {
     int sz = 0;
     map<int, int> idx;
     vector<int> revIdx;
     shared_ptr<FenwickTree> fenwickTree;
 
 public:
-    OrderedMultiSet(vector<int> value) {
+    OrderedMultiset(vector<int> value) {
         sort(value.begin(), value.end());
         value.resize(unique(value.begin(), value.end()) - value.begin());
 
@@ -127,7 +140,7 @@ int main() {
         }
 
         long long ans = 0;
-        OrderedMultiSet set(a);
+        OrderedMultiset set(a);
         for(int i = 0; i < n; i++) {
             set.update(a[i], 1);
             if(i % 2 == 0) {
