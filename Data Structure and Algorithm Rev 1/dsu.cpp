@@ -34,6 +34,10 @@ public:
         return parent[u] = getParent(parent[u]);
     }
 
+    bool isSameSet(int u, int v) {
+        return getParent(u) == getParent(v);
+    }
+
     int getSetSize(int u) {
         return setSize[getParent(u)];
     }
